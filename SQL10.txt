@@ -1,0 +1,60 @@
+信息系统与数据库技术练习10答题卡
+
+班级：     信息管理一班
+姓名：     余晓伟
+学号：     20190307109
+
+注：请将答案放置在序号下方。*/
+
+（一）
+1、/*打开Project数据库。*/
+USE Project
+2、/*在Employee表中列出D001部门(部门号Did为D001)的姓名(Ename)、
+工作日期(WorkDate)和性别(Esex)，结果要求按工作日期(WorkDate)从高到低排列。*/
+SELECT Ename,WorkDate,Esex
+FROM Employee
+WHERE Did = 'D001'
+ORDER BY WorkDate DESC
+3、/*在Employee表中列出全部字段，结果要求按部门号(Did)从高到低排序，
+部门号相同的按基本工资(BasePay)从低到高排列。*/
+SELECT *
+FROM Employee
+ORDER BY Did ASC,BasePay DESC
+4、/*在Employee表中列出2000年及以后参加工作（工作日期WorkDate的年份大于等于2000）的部门号(Did)、
+姓名(Ename)、工作日期(WorkDate)、性别(Esex)和基本工资(BasePay)，
+结果要求按部门号(Did)从低到高排序，部门号相同的按工作日期(WorkDate)从高到低排列。*/
+SELECT Ename,WorkDate,Esex,BasePay
+FROM Employee
+WHERE YEAR(WorkDate)>2000
+ORDER BY WorkDate DESC
+5、/*在EP表中查询报酬(Wages)的最大值、最小值、总和、平均值。要求分别显示别名为最高报酬、最低报酬、总报酬、平均报酬。*/
+SELECT MAX(Wages) AS 最高报酬,MIN(Wages) AS 最低报酬,
+SUM(Wages) AS 总报酬,AVG(Wages) AS 平均报酬
+FROM EP
+6、/*在EP表中查询记录个数和项目号(Pid)个数(重复的只算一个项目)。要求分别显示别名为记录数、项目数。*/
+SELECT COUNT(*) AS 记录数,COUNT(DISTINCT Pid) AS 项目数
+FROM EP
+7、/*在EP表中查询A002项目（项目号Pid为A002）报酬(Wages)的总和、最小值。要求分别显示别名为总报酬和最低报酬。*/
+SELECT SUM(Wages) AS 总和,MIN(Wages) AS 最小值
+FROM EP
+WHERE Pid='A002'
+8、/*在Employee表中查询基本工资(BasePay)大于等于9700的全部字段，并将所得结果保存到表GGZ中。*/
+SELECT * INTO GGZ
+FROM Employee
+WHERE BasePay<=9700
+9、/*查询Employee表所有男员工(性别ESex为1)的雇员号(Eid)、姓名(Ename)、性别(Esex)，并将结果存入临时表MenE。*/
+SELECT Eid,Ename,Esex INTO #MenE
+FROM Employee
+WHERE ESex=1
+10、/*使用合并查询UNION，合并查询1和查询2的结果,要求删除重复记录。
+查询1：Employee表中查询D002部门（部门号Did为D002）
+的部门号(Did)、姓名(Ename)、性别(Esex)、津贴(Bonus)。
+查询2：Employee表中查询女员工(性别Esex为0)的
+部门号(Did)、姓名(Ename)、性别(Esex)、津贴(Bonus)*/
+SELECT Did,Ename,Esex,Bonus
+FROM Employee
+WHERE Did='D002'
+UNION
+SELECT Did ,Ename,Esex,Bonus
+FROM Employee
+WHERE ESex=2
